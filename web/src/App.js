@@ -1,7 +1,7 @@
 /*import React, { Component } from 'react'; -----> usado para class */
 /*import React, { useState } from 'react'; -----> usado para Function */
 import React from 'react';
-import PromotionCard from './components/Promotion/Card/Card';
+import PromotionCard from 'components/Promotion/Card/Card';
 
 
 const App = () => {
