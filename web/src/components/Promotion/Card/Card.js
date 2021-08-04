@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
-const PromotionCard = ({ promotion }) => (
+const PromotionCard = ({ promotion, onClickComments }) => (
     <div className="promotion-card">
         <img src={promotion.imageUrl} className="promotion-card__image" alt={promotion.title} />
         <div className="promotion-card__info" >
@@ -12,18 +12,20 @@ const PromotionCard = ({ promotion }) => (
                 {promotion.comments.length > 0 && (
                     <div className="promotion-card__comment">"{promotion.comments[0].comment}"</div>
                 )}
-                <div className="promotion-card__comments-count" >
+                <button className="promotion-card__comments-count" onClick={onClickComments}>
                     {promotion.comments.length}{' '}
                     {promotion.comments.length > 1 ? 'Comentários' : 'Comentário'}
-                </div>
+                </button>
                 <a
                     href={promotion.url}
                     target="_blank" rel="noreferrer"
                     className="promotion-card__link"
                 >
-                    Ir para o Site
+                    Ir Para o Site
                 </a>
-                <Link to={`/edit/${promotion.id}`}>Edit</Link>
+                <Link to={`/edit/${promotion.id}`} className="promotion-card__edit-button">
+                    Edit
+                </Link>
             </footer>
         </div>
     </div>
