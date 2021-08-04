@@ -27,7 +27,7 @@ const PromotionForm = ({ id }) => {
 
     const [save, saveInfo] = useApi({
         url: id ? `promotions/${id}` : 'promotions',
-        method: id ? 'put' : 'post',        
+        method: id ? 'put' : 'post',
         onCompleted: (response) => {
             if (!response.error) {
                 history.push('/');
@@ -39,7 +39,7 @@ const PromotionForm = ({ id }) => {
         if (id) {
             load();
         }
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/exhaustive-deps  
     }, [id]);
 
     function onChange(ev) {
