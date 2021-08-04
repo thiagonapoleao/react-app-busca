@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import useApi from 'components/utils/useApi';
 import { Link } from "react-router-dom";
 import PromotionList from 'components/Promotion/List/List';
-import './Search.css'
+import './Search.css';
 
 const PromotionSearch = () => {
-       const [search, setSearch] = useState('');
+    const mountRef = useRef(null);
+    const [search, setSearch] = useState('');
     const [load, loadInfo] = useApi({
+        debounceDepay: 300,       
         url: 'promotions',
         method: 'get',
         params: {
@@ -14,14 +16,20 @@ const PromotionSearch = () => {
             _order: 'desc',
             _sort: 'id',
             title_like: search || undefined,
-        },       
+        },
     });
 
-    
+
 
     useEffect(() => {
-        load();
-        // eslint-disable-next-line
+        load({
+            debounced: mountRef.current,
+        });
+
+        if (!mountRef.current) {
+            mountRef.current = true;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps  
     }, [search]);
 
     return (
@@ -37,10 +45,10 @@ const PromotionSearch = () => {
                 value={search}
                 onChange={(ev) => setSearch(ev.target.value)}
             />
-            <PromotionList 
-            promotions={loadInfo.data} 
-            loading={loadInfo.loading} 
-            error={loadInfo.error}
+            <PromotionList
+                promotions={loadInfo.data}
+                loading={loadInfo.loading}
+                error={loadInfo.error}
             />
         </div>
     );
