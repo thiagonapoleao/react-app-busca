@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import PromotionCard from 'components/Promotion/Card/Card';
-import UIModal from 'components/UI/Modal/Modal';
+import PromotionModal from '../Modal/Modal';
+import PromotionCard from '../Card/Card';
+
 import './List.css';
 
 const PromotionList = ({ loading, error, promotions }) => {
-    const [promotionid, setPromotionId] = useState(null);
+    const [promotionId, setPromotionId] = useState(null);
 
     if (error) {
-        return <div>Algo de errado não esta certo...</div>;
+        return <div>Algo de errado não está certo</div>;
     }
-
     if (loading || promotions === null) {
         return <div>Carregando...</div>;
     }
 
     if (promotions.length === 0) {
-        return <div>Nenhum resultado encontrado!</div>
+        return <div>Nenhum resultado encontrado</div>;
     }
 
     return (
@@ -26,9 +26,12 @@ const PromotionList = ({ loading, error, promotions }) => {
                     onClickComments={() => setPromotionId(promotion.id)}
                 />
             ))}
-            <UIModal isOpen={Boolean(promotionid)} onClickClose={() => setPromotionId(null)}>
-                <h1>Comentários</h1>
-            </UIModal>
+            {promotionId && (
+                <PromotionModal
+                    promotionId={promotionId}
+                    onClickClose={() => setPromotionId(null)} />
+            )}
+
         </div>
     );
 }
